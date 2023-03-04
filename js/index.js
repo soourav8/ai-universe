@@ -22,7 +22,7 @@ const displayTools = tools => {
 
 
 
-
+ 
 
 
   tools.forEach(tool => {
@@ -59,7 +59,7 @@ const displayTools = tools => {
     cards.appendChild(cardDiv);
 
   });
-
+ 
 }
 
 
@@ -112,53 +112,66 @@ const showModalDetails = data => {
                         </div>
 
                     <div class="d-flex justify-content-between">
-                                            <div>
-                                                <h5 class="fw-bold">Features</h5>
+                       <div>
+                      <h5 class="fw-bold">Features</h5>
 
-                                                <small>
-                                                    <li><span> ${data.features[1].feature_name}</span></li>
-                                                    <li><span>${data.features[2].feature_name}</span></li>
-                                                    <li><span>${data.features[3].feature_name}</span></li>
+               <small>
+                <li><span> ${data.features[1].feature_name}</span></li>
+              <li><span>${data.features[2].feature_name}</span></li>
+              <li><span>${data.features[3].feature_name}</span></li>
 
-                                                </small>
-                                              </div>
-                                            <div>
-                                                <h5 class="fw-bold">Integrations</h5>
-                                                 <small>
-                                                    <li><span>${data.integration ? data.integrations[0] : 'no data found'}</span></li>
-                                                    <li><span>${data.integration ? data.integrations[1] : 'no data found'}</span></li>
-                                                    <li><span>${data.integration ? data.integrations[2] : 'no data found'}</span></li>
+             </small>
+            </div>
+            <div>
+           <h5 class="fw-bold">Integrations</h5>
+           <small>
+           <li><span>${data.integration ? data.integrations[0] : 'no data found'}</span></li>
+          <li><span>${data.integration ? data.integrations[1] : 'no data found'}</span></li>
+          <li><span>${data.integration ? data.integrations[2] : 'no data found'}</span></li>
 
-                                                </small>
-                                            </div>
-                                        </div>
+        </small>
+         </div>
+       </div>
 
-                                    </div>
-                                    <div class="col-12 col-md-6">
-                                        <div class="text-center p-2">
+            </div>
+         <div class="col-12 col-md-6">
+        <div class="text-center p-2">
 
-                                            <img class="img-fluid p-2"
-                                                src="${data.image_link[0]}"
-                                                alt=""><span class="badge bg-danger notify-badge">New</span>
-
-
-                                            <h5 class="fw-bold">${data.input_output_examples ? data.input_output_examples[0].input : 'Can you give any example?' }</h5>
-                                        <small>${data.input_output_examples
-                                               ? data.input_output_examples
-                                      [1].output: 'No! Not Yet! Take a break!!!'}</small>
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
+         <img id="score" class="img-fluid p-2"
+        src="${data.image_link[0]}"
+     alt=""><span class="badge bg-danger notify-badge">${data.accuracy.score ? data.accuracy.score + " " + 'Accuracy' : ''} </span>
 
 
+     <h5 class="fw-bold">${data.input_output_examples ? data.input_output_examples[0].input : 'Can you give any example?' }</h5>
+    <small>${data.input_output_examples ? data.input_output_examples
+                 [1].output: 'No! Not Yet! Take a break!!!'}</small>
+                  </div>
+              </div>
 
-                        </div>
+          </div>
+     </div>
+
+
+
+   </div>
 
 
 `
   modalDiv.appendChild(modalBody);
+  toggleSpinner(false);
 }
 
-loadTools()
+const toggleSpinner = isLoading =>{
+  const loaderSpinner = document.getElementById('loader');
+  if(isLoading){
+    loaderSpinner.classList.remove('d-none')
+  }
+}
+
+window.onload = function () 
+{
+  toggleSpinner(true);
+loadTools();
+
+
+};

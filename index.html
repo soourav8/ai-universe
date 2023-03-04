@@ -19,21 +19,22 @@
             background-color: #fff8f6;
         }
 
-        .notify-badge{
-          position: absolute;
-          
-          background: rgba(0,0,255,1);
-          height:2rem;
-          top:2rem;
-          right:2.8rem;
-          width:8rem;
-          text-align: center;
-          line-height: rem;;
-          font-size: 1rem;
-          border-radius: 8px;
-          color:white;
-          border:1px solid blue;
-}
+        .notify-badge {
+            position: absolute;
+
+            background: rgba(0, 0, 255, 1);
+            height: 2rem;
+            top: 3.5rem;
+            right: 2.8rem;
+            width: 8rem;
+            text-align: center;
+            line-height: rem;
+            ;
+            font-size: 1rem;
+            border-radius: 8px;
+            color: white;
+            border: 1px solid blue;
+        }
     </style>
 </head>
 
@@ -45,7 +46,14 @@
 
 
     <main>
-
+        <!-- load spinner -->
+        <section id="loader" class="d-none">
+            <div style=" height: 400px" class="d-flex justify-content-center align-items-center">
+                <div class="spinner-border text-success" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+            </div>
+        </section>
 
 
         <!-- cards -->
@@ -70,7 +78,7 @@
             <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
                 aria-hidden="true">
                 <div id="modalDiv" class="modal-dialog modal-dialog-centered modal-lg">
-                    
+
                 </div>
             </div>
 
