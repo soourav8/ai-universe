@@ -1,23 +1,30 @@
-//fetch data from api link
-const loadTools = () => {
+// fetch data from api link
+const loadTools = (text) => {
   fetch('https://openapi.programming-hero.com/api/ai/tools')
     .then(res => res.json())
-    .then(data => displayTools(data.data.tools))
+    .then(data => displayTools(data.data.tools,text))
     .catch(error => console.log(error))
 
 }
 
 
 
+
+
 //display load data
 
-const displayTools = tools => {
-  // console.log(tools)
+const displayTools = (tools,text) => {
+  console.log(tools);
 
 
-
+  
   const cards = document.getElementById('cards');
   cards.textContent = "";
+  const seeMore = document.getElementById('see-more');
+ if(text && tools.length >= 6){
+  tools = tools.slice(0, 6);
+  seeMore.classList.remove('d-none')
+ }
 
 
 
@@ -59,23 +66,24 @@ const displayTools = tools => {
     cards.appendChild(cardDiv);
 
   });
- 
+  toggleSpinner(false);
 }
-
-
 
 
 //load fetch data for modal
 const loadDetails = id => {
   fetch(`https://openapi.programming-hero.com/api/ai/tool/${id}`)
     .then(res => res.json())
-    .then(data => showModalDetails(data.data));
+    .then(data => show(data.data));
 }
+
+
 
 
 // show modal details 
 const showModalDetails = data => {
-  console.log(data);
+  
+  
   const modalDiv = document.getElementById('modalDiv');
   modalDiv.innerHTML = "";
   const modalBody = document.createElement('div')
@@ -158,20 +166,31 @@ const showModalDetails = data => {
 
 `
   modalDiv.appendChild(modalBody);
-  toggleSpinner(false);
 }
+
 
 const toggleSpinner = isLoading =>{
   const loaderSpinner = document.getElementById('loader');
   if(isLoading){
     loaderSpinner.classList.remove('d-none')
   }
+  else{
+    loaderSpinner.classList.add('d-none')
+  }
 }
+
+
+document.getElementById('see-more').addEventListener('click', function(){
+  loadTools()
+})
+
+const text = 6;
 
 window.onload = function () 
 {
   toggleSpinner(true);
-loadTools();
+loadTools(text);
 
 
 };
+
