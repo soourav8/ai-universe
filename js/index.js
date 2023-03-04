@@ -66,6 +66,7 @@ const displayTools = (tools,text) => {
     cards.appendChild(cardDiv);
 
   });
+  //spinner stop
   toggleSpinner(false);
 }
 
@@ -168,7 +169,7 @@ const showModalDetails = data => {
   modalDiv.appendChild(modalBody);
 }
 
-
+//spinner function 
 const toggleSpinner = isLoading =>{
   const loaderSpinner = document.getElementById('loader');
   if(isLoading){
@@ -188,6 +189,7 @@ const text = 6;
 
 window.onload = function () 
 {
+  //spinner start
   toggleSpinner(true);
 loadTools(text);
 
