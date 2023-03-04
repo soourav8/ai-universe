@@ -25,6 +25,9 @@ const displayTools = (tools,text) => {
   tools = tools.slice(0, 6);
   seeMore.classList.remove('d-none')
  }
+ else{
+  seeMore.classList.add('d-none')
+ }
 
 
 
@@ -75,7 +78,7 @@ const displayTools = (tools,text) => {
 const loadDetails = id => {
   fetch(`https://openapi.programming-hero.com/api/ai/tool/${id}`)
     .then(res => res.json())
-    .then(data => show(data.data));
+    .then(data => showModalDetails(data.data));
 }
 
 
@@ -148,7 +151,7 @@ const showModalDetails = data => {
 
          <img id="score" class="img-fluid p-2"
         src="${data.image_link[0]}"
-     alt=""><span class="badge bg-danger notify-badge">${data.accuracy.score ? data.accuracy.score + " " + 'Accuracy' : ''} </span>
+     alt=""><span class="badge bg-danger notify-badge d-none d-sm-block">${data.accuracy.score ? data.accuracy.score + " " + 'Accuracy' : ''} </span>
 
 
      <h5 class="fw-bold">${data.input_output_examples ? data.input_output_examples[0].input : 'Can you give any example?' }</h5>
