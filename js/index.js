@@ -1,9 +1,9 @@
 //fetch data from api link
 const loadTools = () => {
-    fetch('https://openapi.programming-hero.com/api/ai/tools')
-        .then(res => res.json())
-        .then(data => displayTools(data.data.tools))
-        .catch(error => console.log(error))
+  fetch('https://openapi.programming-hero.com/api/ai/tools')
+    .then(res => res.json())
+    .then(data => displayTools(data.data.tools))
+    .catch(error => console.log(error))
 
 }
 
@@ -12,26 +12,26 @@ const loadTools = () => {
 //display load data
 
 const displayTools = tools => {
-  console.log(tools)
-   
-    
-    
-    const cards = document.getElementById('cards');
-    cards.textContent = "";
+  // console.log(tools)
+
+
+
+  const cards = document.getElementById('cards');
+  cards.textContent = "";
 
 
 
 
 
-    
 
-    tools.forEach(tool => {
-      console.log(tool);
-        
-        const cardDiv = document.createElement('div')
-        cardDiv.classList.add('col-12', 'col-sm-6', 'col-md-4', );
-    
-       cardDiv.innerHTML = `
+
+  tools.forEach(tool => {
+    // console.log(tool);
+
+    const cardDiv = document.createElement('div')
+    cardDiv.classList.add('col-12', 'col-sm-6', 'col-md-4',);
+
+    cardDiv.innerHTML = `
 
        <div class="card h-100 rounded p-3">
         <img  src="${tool.image}" class="card-img-top rounded " alt="...">
@@ -43,10 +43,10 @@ const displayTools = tools => {
         <div>
         <h5 class="card-title text-bold">${tool.name}</h5>
           <small class="text-muted"><i class="fa-regular fa-calendar-days"></i> ${tool.published_in
-          }</small>
+      }</small>
           </div>
           <div>
-          <div class="btn btn-light text-danger "  data-bs-toggle="modal" data-bs-target="#exampleModal" ><i class="fa-solid fa-arrow-right"></i></div>
+          <div class="btn btn-light text-danger " onclick="loadDetails('${tool.id}')" data-bs-toggle="modal" data-bs-target="#exampleModal" ><i class="fa-solid fa-arrow-right"></i></div>
           </div>
         </div>
         <div>
@@ -56,16 +56,109 @@ const displayTools = tools => {
         
                 
 `
-cards.appendChild(cardDiv);
+    cards.appendChild(cardDiv);
 
-    });
-    
+  });
+
 }
 
 
 
 
+//load fetch data for modal
+const loadDetails = id => {
+  fetch(`https://openapi.programming-hero.com/api/ai/tool/${id}`)
+    .then(res => res.json())
+    .then(data => showModalDetails(data.data));
+}
 
 
- 
+// show modal details 
+const showModalDetails = data => {
+  console.log(data);
+  const modalDiv = document.getElementById('modalDiv');
+  modalDiv.innerHTML = "";
+  const modalBody = document.createElement('div')
+  modalBody.classList.add('modal-content');
+  
+  modalBody.innerHTML = `
+    <div class="modal-header">
+
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+                      
+      <div class="modal-body">
+
+          <div class="container">
+              <div class="row row-cols-2">
+                  <div id="left-card" class="col-12 col-md-6 border border-warning p-3 rounded ">
+                      <h5 class="fw-bold">${data.description}</h5>
+                      <div class="d-flex justify-content-evenly my-2">
+                      <div class="w-25 ">
+                      <small class="text-danger fw-bold">
+                      ${data.pricing ? data.pricing[0].price + ' ' + data.pricing[0].plan : 'Free of cost'}
+                      </small>
+                    </div>
+                      <div class="w-25 ">
+                        <small class="text-primary fw-bold">
+                        ${ data.pricing ? data.pricing[1].price + ' ' + data.pricing[0].plan : 'Free of cost'}
+                        </small>
+                       </div>
+                        <div class="w-25 ">
+                         <small class="text-success fw-bold">
+                        ${data.pricing ? data.pricing[2].price + ' ' + data.pricing[0].plan : 'Free of cost'}
+                          </small>
+                         </div>
+                        </div>
+
+                    <div class="d-flex justify-content-between">
+                                            <div>
+                                                <h5 class="fw-bold">Features</h5>
+
+                                                <small>
+                                                    <li><span> ${data.features[1].feature_name}</span></li>
+                                                    <li><span>${data.features[2].feature_name}</span></li>
+                                                    <li><span>${data.features[3].feature_name}</span></li>
+
+                                                </small>
+                                              </div>
+                                            <div>
+                                                <h5 class="fw-bold">Integrations</h5>
+                                                 <small>
+                                                    <li><span>${data.integration ? data.integrations[0] : 'no data found'}</span></li>
+                                                    <li><span>${data.integration ? data.integrations[1] : 'no data found'}</span></li>
+                                                    <li><span>${data.integration ? data.integrations[2] : 'no data found'}</span></li>
+
+                                                </small>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        <div class="text-center p-2">
+
+                                            <img class="img-fluid p-2"
+                                                src="${data.image_link[0]}"
+                                                alt=""><span class="badge bg-danger notify-badge">New</span>
+
+
+                                            <h5 class="fw-bold">${data.input_output_examples ? data.input_output_examples[0].input : 'Can you give any example?' }</h5>
+                                        <small>${data.input_output_examples
+                                               ? data.input_output_examples
+                                      [1].output: 'No! Not Yet! Take a break!!!'}</small>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+
+
+                        </div>
+
+
+`
+  modalDiv.appendChild(modalBody);
+}
+
 loadTools()
