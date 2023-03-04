@@ -46,7 +46,7 @@ const displayTools = tools => {
           }</small>
           </div>
           <div>
-          <div class="btn btn-light text-danger"><i class="fa-solid fa-arrow-right"></i></div>
+          <div class="btn btn-light text-danger "  data-bs-toggle="modal" data-bs-target="#exampleModal" ><i class="fa-solid fa-arrow-right"></i></div>
           </div>
         </div>
         <div>
